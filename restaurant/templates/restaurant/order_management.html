@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+
+    <nav class="bg-orange-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between">
+            <h1 class="text-2xl font-bold">Order Management</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'index' %}" class="hover:text-yellow-300">Home</a></li>
+                <li><a href="{% url 'order_capture' %}" class="hover:text-yellow-300">Order Capture</a></li>
+                <li><a href="{% url 'order_processing' %}" class="hover:text-yellow-300">Order Processing</a></li>
+                <li><a href="{% url 'inventory_management' %}" class="hover:text-yellow-300">Inventory Management</a></li>
+                <li><a href="{% url 'order_fulfillment' %}" class="hover:text-yellow-300">Order Fulfillment</a></li>
+                <li><a href="{% url 'order_tracking' %}" class="hover:text-yellow-300">Order Tracking</a></li>
+                <li><a href="{% url 'customer_communication' %}" class="hover:text-yellow-300">Customer Communication</a></li>
+                <li><a href="{% url 'return_processing' %}" class="hover:text-yellow-300">Returns Processing</a></li>
+                <li><a href="{% url 'payment_form' %"} class="hover:text-yellow-300">Payment Processing</a></li>
+                <li><a href="{% url 'billing' %}" class="hover:text-yellow-300">Billing</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Order Capture -->
+    <section id="order_capture" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Order Capture</h2>
+        <p>Receive and record customer orders efficiently.</p>
+    </section>
+
+    <!-- Order Processing -->
+    <section id="order_processing" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Order Processing</h2>
+        <p>Process orders accurately and quickly.</p>
+    </section>
+
+    <!-- Inventory Management -->
+    <section id="inventory_management" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Inventory Management</h2>
+        <p>Manage inventory levels to ensure availability and minimize costs.</p>
+    </section>
+
+    <!-- Order Fulfillment -->
+    <section id="order_fulfillment" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Order Fulfillment</h2>
+        <p>Pick, pack, and ship orders efficiently.</p>
+    </section>
+
+    <!-- Order Tracking -->
+    <section id="order_tracking" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Order Tracking</h2>
+        <p>Track orders from placement to delivery.</p>
+    </section>
+
+    <!-- Customer Communication -->
+    <section id="customer_communication" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Customer Communication</h2>
+        <p>Communicate with customers about their orders.</p>
+    </section>
+
+    <!-- Returns Processing -->
+    <section id="returns_processing" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Returns Processing</h2>
+        <p>Handle returns efficiently and accurately.</p>
+    </section>
+
+    <!-- Payment Processing -->
+    <section id="payment_processing" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Payment Processing</h2>
+        <p>Process payments securely and accurately.</p>
+    </section>
+
+    <!-- Billing -->
+    <section id="billing" class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-4">Billing</h2>
+        <p>Generate and manage customer bills.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-orange-600 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Restaurant Management System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

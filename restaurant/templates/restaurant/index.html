@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        a:active {
+            color: #ffcc00;
+            /* Change this to your desired color */
+        }
+    </style>
+</head>
+
+<body class="bg-orange-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-orange-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between">
+            <h1 class="text-2xl font-bold">Restaurant Management</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'index' %}" class="hover:text-yellow-300">Home</a></li>
+                <li><a href="#about" class="hover:text-yellow-300">About Us</a></li>
+                <li><a href="{% url 'admin_home' %}" class="hover:text-yellow-300">Admin Login</a></li>
+                <li><a href="{% url 'contact' %}" class="hover:text-yellow-300">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <section class="relative bg-gradient-to-r from-orange-500 to-red-500 text-white text-center py-16">
+        <div id="Restaurant" class="bg-white p-4 shadow-lg rounded-lg"></div>
+        <img src="{% static 'images/menu.avif' %}" class="w-full h-auto rounded-lg mb-4 object-cover">
+        <h2 class="text-4xl font-bold">RESTAURANT</h2>
+    </section>
+
+    <!-- Management Sections -->
+    <section class="container mx-auto py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="{% url 'order_management' %}" class="block p-4 bg-white shadow-lg rounded-lg">
+            <h3 class="text-xl font-bold">Order Management</h3>
+            <p>Manage all orders efficiently with our streamlined system.</p>
+        </a>
+        <a href="{% url 'sales_management' %}" class="block p-4 bg-white shadow-lg rounded-lg">
+            <h3 class="text-xl font-bold">Sales Management</h3>
+            <p>Track and analyze your sales for better decision-making.</p>
+        </a>
+        <a href="{% url 'food_management' %}" class="block p-4 bg-white shadow-lg rounded-lg">
+            <h3 class="text-xl font-bold">Menu</h3>
+            <p>Manage your food inventory and menu effortlessly.</p>
+        </a>
+        <a href="{% url 'login_management' %}" class="block p-4 bg-white shadow-lg rounded-lg">
+            <h3 class="text-xl font-bold">Login Management</h3>
+            <p>Secure login system for staff and administrators.</p>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mx-auto py-12 px-4 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-bold mb-4">About Restaurant Management System</h2>
+        <p>
+            Our system helps streamline restaurant operations by handling orders, managing sales, tracking food
+            inventory, and ensuring secure staff logins. Designed for efficiency and ease of use, it's perfect for
+            modern restaurants.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-orange-600 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Restaurant Management System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

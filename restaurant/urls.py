@@ -1,0 +1,41 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),  # Root URL for the restaurant app
+    path('admin_home/', views.admin_home, name='admin_home'),  # Admin Home URL
+    path('contact/', views.contact, name='contact'),  
+    path('order_management/', views.order_management, name='order_management'),  
+    path('sales_management/', views.sales_management, name='sales_management'),
+    path('food_management/', views.food_management, name='food_management'),
+    path('cart/', views.cart, name='cart'),
+    path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
+    path('login_management/', views.login_management, name='login_management'),
+    path('pizza/', views.pizza, name='pizza'),
+    path('burger/', views.burger, name='burger'),
+    path('panini/', views.panini, name='panini'),
+    path('drinks/', views.drinks, name='drinks'),
+    path('sweet/', views.sweet, name='sweet'),
+    path('roll/', views.roll, name='roll'),
+    path('sales_tracking/', views.sales_tracking, name='sales_tracking'),
+    path('Rating/', views.Rating, name='Rating'),
+    path('feedback/', views.feedback, name='feedback'),
+    path('reports/', views.reports, name='reports'),
+    path('tax_record/', views.tax_record, name='tax_record'),
+    path('order_capture/', views.order_capture, name='order_capture'),
+    path('submit_order/', views.submit_order, name='submit_order'),
+    path('order_processing/', views.order_processing, name='order_processing'),
+    path('update_order_status/<int:order_id>/', views.update_order_status, name='update_order_status'),
+    path('inventory_management/', views.inventory_management, name='inventory_management'),
+    path('order_fulfillment/', views.order_fulfillment, name='order_fulfillment'),
+    path('order_tracking/', views.order_tracking, name='order_tracking'),
+    path('order/<int:order_id>/', views.order_detail, name='order_detail'),
+    path('communications/', views.customer_communication, name='customer_communication'),
+    path('communications/create/', views.create_contact, name='create_contact'),
+    path('returns/', views.return_processing, name='return_processing'),
+    path('returns/process/<int:return_id>/', views.process_return, name='process_return'),
+    path('payment/<int:order_id>/', views.payment_success, name='process_payment'),
+    path('payment/success/<int:payment_id>/', views.payment_success, name='payment_success'),
+    path('billing/', views.billing_overview, name='billing'),
+    path('payment/detail/<int:payment_id>/', views.payment_detail, name='payment_detail'),
+]

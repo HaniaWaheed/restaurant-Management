@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Records - Restaurant Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-green-700 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Tax Records</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'sales_management' %}" class="hover:text-yellow-300">Menu</a></li>
+                <li><a href="{% url 'feedback' %}" class="hover:text-yellow-300">Feedback</a></li>
+                <li><a href="{% url 'reports' %}" class="hover:text-yellow-300">Sales Report</a></li>
+                <li><a href="{% url 'tax_record' %}" class="hover:text-yellow-300">Tax Records</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+
+        <!-- Tax Summary -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Total Tax Summary</h2>
+            <p class="text-lg">Total Tax Collected: <span class="font-bold text-green-600">Rs. {{ total_tax }}</span>
+            </p>
+            <p class="text-lg">Total Orders Processed: <span class="font-bold text-blue-600">{{ total_orders }}</span>
+            </p>
+        </div>
+
+        <!-- Date Filter for Tax Records -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Filter Tax Records by Date</h2>
+            <form method="get" action="">
+                <div class="flex space-x-4">
+                    <div>
+                        <label for="start_date" class="block text-gray-700">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="px-4 py-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label for="end_date" class="block text-gray-700">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="px-4 py-2 border rounded-lg">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit"
+                            class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Daily Tax Records -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Daily Tax Records</h2>
+            <table class="w-full table-auto border-collapse">
+                <thead>
+                    <tr class="bg-green-700 text-white">
+                        <th class="px-4 py-2">Date</th>
+                        <th class="px-4 py-2">Total Orders</th>
+                        <th class="px-4 py-2">Tax Collected (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in tax_data %}
+                    <tr class="bg-gray-100 even:bg-gray-200">
+                        <td class="px-4 py-2">{{ record.date }}</td>
+                        <td class="px-4 py-2">{{ record.total_orders }}</td>
+                        <td class="px-4 py-2">{{ record.tax_collected }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-4">No tax data available for this period.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

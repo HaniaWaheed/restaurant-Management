@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Communications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar (same as previous pages) -->
+<nav class="bg-orange-600 text-white p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-2xl font-bold">Customer Communication</h1>
+        <ul class="flex space-x-6">
+            <li><a href="{% url 'order_management' %}" class="hover:text-yellow-300">Home</a></li>
+            <li><a href="{% url 'order_capture' %}" class="hover:text-yellow-300">Order Capture</a></li>
+            <li><a href="{% url 'order_processing' %}" class="hover:text-yellow-300">Order Processing</a></li>
+        </ul>
+    </div>
+</nav>
+    <div class="container mx-auto py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6">Customer Communications</h2>
+
+            <div class="mb-4">
+                <a href="{% url 'create_contact' %}"
+                    class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700">
+                    New Communication
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for contact in contacts %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ contact.created_at|date:"M d, Y H:i" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ contact.get_contact_type_display }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if contact.order %}
+                                Order #{{ contact.order.id }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {% if contact.resolved %}bg-green-100 text-green-800
+                                    {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    {% if contact.resolved %}Resolved{% else %}Open{% endif %}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="#" class="text-orange-600 hover:text-orange-900">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

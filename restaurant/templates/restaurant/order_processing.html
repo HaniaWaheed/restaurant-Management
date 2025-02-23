@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Processing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-orange-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between">
+            <h1 class="text-2xl font-bold">Order Management</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'order_management' %}" class="hover:text-yellow-300">Home</a></li>
+                <li><a href="{% url 'order_capture' %}" class="hover:text-yellow-300">Order Capture</a></li>
+                <li><a href="{% url 'order_processing' %}" class="hover:text-yellow-300">Order Processing</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Order Processing Section -->
+    <section class="container mx-auto py-12">
+        <h2 class="text-3xl font-bold mb-6 text-center">Order Processing</h2>
+
+        {% if orders %}
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr class="bg-orange-600 text-white">
+                        <th class="px-4 py-2">Order ID</th>
+                        <th class="px-4 py-2">Customer Name</th>
+                        <th class="px-4 py-2">Order Items</th>
+                        <th class="px-4 py-2">Total ($)</th>
+                        <th class="px-4 py-2">Status</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="text-center border-b">
+                        <td class="px-4 py-2">{{ order.id }}</td>
+                        <td class="px-4 py-2">{{ order.customer_name }}</td>
+                        <td class="px-4 py-2">{{ order.order_items }}</td>
+                        <td class="px-4 py-2">${{ order.order_total }}</td>
+                        <td class="px-4 py-2">{{ order.status }}</td>
+                        <td class="px-4 py-2">
+                            {% if order.status != 'Completed' %}
+                            <form action="{% url 'update_order_status' order.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Mark as
+                                    Completed</button>
+                            </form>
+                            {% else %}
+                            <span class="text-green-600 font-semibold">Completed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-gray-600">No orders available for processing.</p>
+        {% endif %}
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-orange-600 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Restaurant Management System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

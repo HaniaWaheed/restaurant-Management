@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+<nav class="bg-orange-600 text-white p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-2xl font-bold">Order Management</h1>
+        <ul class="flex space-x-6">
+            <li><a href="{% url 'order_management' %}" class="hover:text-yellow-300">Home</a></li>
+            <li><a href="{% url 'order_capture' %}" class="hover:text-yellow-300">Order Capture</a></li>
+            <li><a href="{% url 'order_processing' %}" class="hover:text-yellow-300">Order Processing</a></li>
+        </ul>
+    </div>
+</nav>
+    <div class="container mx-auto py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6">Payment History</h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Method</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for payment in payments %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">#{{ payment.order.id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${{ payment.amount }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ payment.get_payment_method_display }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {% if payment.status == 'completed' %}bg-green-100 text-green-800
+                                    {% elif payment.status == 'failed' %}bg-red-100 text-red-800
+                                    {% elif payment.status == 'refunded' %}bg-gray-100 text-gray-800
+                                    {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    {{ payment.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ payment.created_at|date:"M d, Y" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="{% url 'payment_detail' payment.id %}"
+                                    class="text-orange-600 hover:text-orange-900">Details</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

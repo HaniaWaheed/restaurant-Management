@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Menu with Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let cart = [];
+
+        function addToCart(pizzaName, size) {
+            cart.push({ name: pizzaName, size: size });
+            renderCart();
+            showCart(); // Automatically show the cart after adding an item
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const price = parseInt(item.size.split('PKR ')[1]);
+                total += price;
+                cartContainer.innerHTML += `
+                    <div class="flex justify-between items-center mb-2">
+                        <span>${item.name} - ${item.size}</span>
+                        <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700">Delete</button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-total').innerText = `Total: PKR ${total}`;
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            cartSidebar.classList.toggle('hidden');
+        }
+
+        function showCart() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            cartSidebar.classList.remove('hidden');
+        }
+    </script>
+</head>
+
+<body class="bg-orange-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-orange-600 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Pizza Menu</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'food_management' %}" class="hover:text-yellow-300">Food Menu</a></li>
+                <li><button onclick="toggleCart()" class="hover:text-yellow-300">Bucket</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Pizza Menu Section -->
+    <section class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold text-center mb-8">Our Pizzas</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Margherita Pizza -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Margherita</h3>
+                <p>Classic cheese and tomato pizza.</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Margherita', document.querySelector('input[name=\'margherita_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="margherita_small" name="margherita_size" value="Small - PKR 600"
+                                required>
+                            <label for="margherita_small">Small - PKR 600</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="margherita_medium" name="margherita_size" value="Medium - PKR 900">
+                            <label for="margherita_medium">Medium - PKR 900</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="margherita_large" name="margherita_size" value="Large - PKR 1200">
+                            <label for="margherita_large">Large - PKR 1200</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Pepperoni Pizza -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Pepperoni</h3>
+                <p>Spicy pepperoni with mozzarella.</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Pepperoni', document.querySelector('input[name=\'pepperoni_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="pepperoni_small" name="pepperoni_size" value="Small - PKR 750"
+                                required>
+                            <label for="pepperoni_small">Small - PKR 750</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="pepperoni_medium" name="pepperoni_size" value="Medium - PKR 1100">
+                            <label for="pepperoni_medium">Medium - PKR 1100</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="pepperoni_large" name="pepperoni_size" value="Large - PKR 1500">
+                            <label for="pepperoni_large">Large - PKR 1500</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- BBQ Chicken Pizza -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">BBQ Chicken</h3>
+                <p>Grilled chicken with BBQ sauce.</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('BBQ Chicken', document.querySelector('input[name=\'bbq_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="bbq_small" name="bbq_size" value="Small - PKR 850" required>
+                            <label for="bbq_small">Small - PKR 850</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="bbq_medium" name="bbq_size" value="Medium - PKR 1300">
+                            <label for="bbq_medium">Medium - PKR 1300</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="bbq_large" name="bbq_size" value="Large - PKR 1700">
+                            <label for="bbq_large">Large - PKR 1700</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Veggie Supreme -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Veggie Supreme</h3>
+                <p>Loaded with fresh vegetables.</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Veggie Supreme', document.querySelector('input[name=\'veggie_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="veggie_small" name="veggie_size" value="Small - PKR 700" required>
+                            <label for="veggie_small">Small - PKR 700</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="veggie_medium" name="veggie_size" value="Medium - PKR 1050">
+                            <label for="veggie_medium">Medium - PKR 1050</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="veggie_large" name="veggie_size" value="Large - PKR 1400">
+                            <label for="veggie_large">Large - PKR 1400</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Chicken Fajita Pizza -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Chicken Fajita</h3>
+                <p>Spicy chicken with fajita seasoning.</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Chicken Fajita', document.querySelector('input[name=\'fajita_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="fajita_small" name="fajita_size" value="Small  - PKR 800" required>
+                            <label for="fajita_small">Small - PKR 800</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="fajita_medium" name="fajita_size" value="Medium - PKR 1250" required> </h3>
+                           <label for="fajita_small">Medium - PKR 1250</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="fajita_large" name="fajita_large" value="Large - PKR 2100" required> </h3>
+                            <label for="fajita_Large">Large - PKR 2100</label>
+                        </li>
+                </ul>
+                <button type="submit" class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-orange-600 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Pizza Menu. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

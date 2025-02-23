@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Process Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar (same as previous pages) -->
+<nav class="bg-orange-600 text-white p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-2xl font-bold">Order Management</h1>
+        <ul class="flex space-x-6">
+            <li><a href="{% url 'order_management' %}" class="hover:text-yellow-300">Home</a></li>
+            <li><a href="{% url 'order_capture' %}" class="hover:text-yellow-300">Order Capture</a></li>
+            <li><a href="{% url 'order_processing' %}" class="hover:text-yellow-300">Order Processing</a></li>
+        </ul>
+    </div>
+</nav>
+    <div class="container mx-auto py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold mb-6">Payment for Order #{{ order.id }}</h2>
+
+            <div class="mb-4 p-4 bg-orange-50 rounded-lg">
+                <p class="font-semibold">Total Amount: ${{ order.order_total }}</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Payment Method</label>
+                        {{ form.payment_method }}
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Amount</label>
+                        {{ form.amount }}
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full mt-6 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition">
+                    Process Payment
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

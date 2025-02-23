@@ -1,0 +1,209 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger Menu - Restaurant Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let cart = [];
+
+        function addToCart(burgerName, size) {
+            cart.push({ name: burgerName, size: size });
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const price = parseInt(item.size.split('PKR ')[1]);
+                total += price;
+                cartContainer.innerHTML += `
+                    <div class="flex justify-between items-center mb-2">
+                        <span>${item.name} - ${item.size}</span>
+                        <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700">Delete</button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-total').innerText = `Total: PKR ${total}`;
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            cartSidebar.classList.toggle('hidden');
+        }
+    </script>
+</head>
+
+<body class="bg-orange-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-orange-600 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Burger Menu</h1>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'food_management' %}" class="hover:text-yellow-300">Food Menu</a></li>
+                <li><button onclick="toggleCart()" class="hover:text-yellow-300">Bucket</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Burger Menu Section -->
+    <section class="container mx-auto py-12">
+        <h2 class="text-2xl font-bold text-center mb-8">Our Burgers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Classic Beef Burger -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Classic Beef</h3>
+                <p>Juicy beef patty with fresh vegetables</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Classic Beef', document.querySelector('input[name=\'classic_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="classic_small" name="classic_size" value="Small - PKR 450" required>
+                            <label for="classic_small">Small - PKR 450</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="classic_medium" name="classic_size" value="Medium - PKR 650">
+                            <label for="classic_medium">Medium - PKR 650</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="classic_large" name="classic_size" value="Large - PKR 850">
+                            <label for="classic_large">Large - PKR 850</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Chicken Burger -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Crispy Chicken</h3>
+                <p>Crispy fried chicken with special sauce</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Crispy Chicken', document.querySelector('input[name=\'chicken_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="chicken_small" name="chicken_size" value="Small - PKR 400" required>
+                            <label for="chicken_small">Small - PKR 400</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="chicken_medium" name="chicken_size" value="Medium - PKR 600">
+                            <label for="chicken_medium">Medium - PKR 600</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="chicken_large" name="chicken_size" value="Large - PKR 800">
+                            <label for="chicken_large">Large - PKR 800</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Veggie Burger -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Veggie Delight</h3>
+                <p>Grilled vegetables with hummus spread</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Veggie Delight', document.querySelector('input[name=\'veggie_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="veggie_small" name="veggie_size" value="Small - PKR 350" required>
+                            <label for="veggie_small">Small - PKR 350</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="veggie_medium" name="veggie_size" value="Medium - PKR 550">
+                            <label for="veggie_medium">Medium - PKR 550</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="veggie_large" name="veggie_size" value="Large - PKR 750">
+                            <label for="veggie_large">Large - PKR 750</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Double Cheese Burger -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Double Cheese</h3>
+                <p>Double beef patty with extra cheese</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Double Cheese', document.querySelector('input[name=\'cheese_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="cheese_small" name="cheese_size" value="Small - PKR 500" required>
+                            <label for="cheese_small">Small - PKR 500</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cheese_medium" name="cheese_size" value="Medium - PKR 750">
+                            <label for="cheese_medium">Medium - PKR 750</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cheese_large" name="cheese_size" value="Large - PKR 950">
+                            <label for="cheese_large">Large - PKR 950</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+
+            <!-- Spicy BBQ Burger -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Spicy BBQ</h3>
+                <p>Grilled chicken with spicy BBQ sauce</p>
+                <form
+                    onsubmit="event.preventDefault(); addToCart('Spicy BBQ', document.querySelector('input[name=\'bbq_size\']:checked').value);">
+                    <ul class="mt-4">
+                        <li>
+                            <input type="radio" id="bbq_small" name="bbq_size" value="Small - PKR 450" required>
+                            <label for="bbq_small">Small - PKR 450</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="bbq_medium" name="bbq_size" value="Medium - PKR 700">
+                            <label for="bbq_medium">Medium - PKR 700</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="bbq_large" name="bbq_size" value="Large - PKR 900">
+                            <label for="bbq_large">Large - PKR 900</label>
+                        </li>
+                    </ul>
+                    <button type="submit"
+                        class="mt-4 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="hidden fixed top-0 right-0 w-64 h-full bg-white shadow-lg p-4 overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Your Cart</h3>
+            <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">×</button>
+        </div>
+        <div id="cart-items" class="mb-4"></div>
+        <div id="cart-total" class="font-bold"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-orange-600 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Restaurant Management System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
